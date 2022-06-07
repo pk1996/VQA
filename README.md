@@ -14,3 +14,9 @@ Generate vocabulary for using the following -
 ```
 python preprocess_text.py
 ```
+We only consider the top 3000 frequent answers with single answers
+#TODO Does the vocabulary have only single word answers?
+```
+python filter_data.py --split train
+python filter_data.py --split val
+```
