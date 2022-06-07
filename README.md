@@ -15,8 +15,11 @@ Generate vocabulary for using the following -
 python preprocess_text.py
 ```
 We only consider the top 3000 frequent answers with single answers \
-#TODO Does the vocabulary have only single word answers?
 ```
 python filter_data.py --split train
 python filter_data.py --split val
 ```
+
+# TODO
+Does the vocabulary have only single word answers because we are filtering it out that way \
+What percetage of answers would be covered if we take 1000 most frequent answers because SAN and baseline work on 1000?
