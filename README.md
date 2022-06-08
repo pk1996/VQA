@@ -35,4 +35,8 @@ python train.py --experiment <name_of_experiment> --model <SAN/Tiled/Baseline>
 
 # TODO
 Does the vocabulary have only single word answers because we are filtering it out that way \
-What percetage of answers would be covered if we take 1000 most frequent answers because SAN and baseline work on 1000?
+What percetage of answers would be covered if we take 1000 most frequent answers because SAN and baseline work on 1000? \
+To add eval related code 
+
+
+
