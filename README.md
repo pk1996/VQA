@@ -31,6 +31,7 @@ python train.py --experiment <name_of_experiment> --model <SAN/Tiled/Baseline>
 --optim - adam/sgd
 --model - SAN/Tiled/Baseline
 ```
+Note that the model and checkpoint_dir flag need to match in terms of the model architecture.
 
 
 # TODO
