@@ -14,7 +14,7 @@ Refer - https://arxiv.org/pdf/1704.03162.pdf
 '''
 class TiledAttention(nn.Module):
     # init method to initialize and the forward function
-    def __init__(self, l_dict, dropout = None):
+    def __init__(self, l_dict, dropout = None, num_classes = 3001):
         super(TiledAttention,self).__init__()
         glimpses=2
         img_vec_size=2048
@@ -23,7 +23,7 @@ class TiledAttention(nn.Module):
                 
         self.text = TextProcessing(l_dict,l_ques=ques_len,embedding_size=text_vec_size, dropout = dropout)
         self.fuse = Fusion(v=img_vec_size,q=text_vec_size,mid=512,glimpses=glimpses, dropout = dropout)
-        self.classifier =  Classifier(in_features=glimpses*img_vec_size+text_vec_size,mid_features=text_vec_size,out_features=3001, dropout = dropout)
+        self.classifier =  Classifier(in_features=glimpses*img_vec_size+text_vec_size,mid_features=text_vec_size,out_features=num_classes, dropout = dropout)
         
     def forward(self,text_vec,img_vec,q_len):
         text_vec=self.text(text_vec,q_len) #text_processing
@@ -39,12 +39,11 @@ Baseline Model
 Refer - https://arxiv.org/pdf/1505.00468v6.pdf
 '''
 class BaseLine(nn.Module):
-    def __init__(self, l_dict, dropout = None):
+    def __init__(self, l_dict, dropout = None, num_classes = 3001):
         super(BaseLine,self).__init__()
         text_vec_size = 1024
         ques_len=300 # size of embedding vector
-        num_classes = 3001
-                
+        
         self.text = TextProcessing(l_dict,l_ques=ques_len,embedding_size=text_vec_size, dropout = dropout)
         self.fusion = BaselineFusion(num_classes)
     
@@ -58,11 +57,11 @@ Stacked attention Model
 Refer - https://arxiv.org/pdf/1511.02274.pdf
 '''  
 class SANModel(nn.Module):
-    def __init__(self, l_dict, dropout = None):
+    def __init__(self, l_dict, dropout = None, num_classes = 3001):
         super(SANModel,self).__init__()
         text_vec_size = 1024
         ques_len=300 # size of embedding vector
-        num_classes = 3001
+        num_classes = num_classes
                 
         self.text = TextProcessing(l_dict,l_ques=ques_len,embedding_size=text_vec_size, dropout = dropout)
         self.fusion = StackedAttention(num_classes)

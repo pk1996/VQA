@@ -16,7 +16,6 @@ Other available options -
 5. experiment
 6. checkpoint_dir - path to .pt saved checkpoint.
 7  model - SAN/Tiled/Baseline
-8. vocabSize - 1000/3000
 
 Note - Output saved as following 
 
@@ -31,7 +30,6 @@ exp_dir_name
  To run from saved checkpoint
  python train.py --checkpoint_dir experiment/checkpoint.pt
  
- To
 '''
 
 import torch
@@ -118,6 +116,9 @@ hparams['dropout'] = opt.dropout
 hparams['epochs'] = opt.epochs
 hparams['model'] = opt.model
 hparams['vocabSize'] = opt.vocabSize
+hparams['num_classes'] = opt.num_classes
+
+assert opt.num_classes == opt.vocabSize + 1, 'Mismatch in num classes and vocan size'
 
 print('*****************')
 print(hparams)
@@ -162,11 +163,11 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # Create model
 if opt.model == "Tiled":
-    model = TiledAttention(len(l_dict['questions'])+1, dropout).to(device)
+    model = TiledAttention(len(l_dict['questions'])+1, dropout, opt.num_classes).to(device)
 elif opt.model == "SAN":
-    model = SANModel(len(l_dict['questions'])+1).to(device)
+    model = SANModel(len(l_dict['questions'])+1, dropout, opt.num_classes).to(device)
 elif opt.model == "Baseline":
-    model = BaseLine(len(l_dict['questions'])+1).to(device)
+    model = BaseLine(len(l_dict['questions'])+1, dropout, opt.num_classes).to(device)
 else:
     print("Model type from SAN/Tiled/Baseline")
     
