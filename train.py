@@ -115,6 +115,7 @@ hparams['optim'] = opt.optim
 hparams['dropout'] = opt.dropout
 hparams['epochs'] = opt.epochs
 hparams['model'] = opt.model
+hparams['vocabSize'] = opt.vocabSize
 
 print('*****************')
 print(hparams)
@@ -143,7 +144,7 @@ if not os.path.exists(exp_dir):
 # load vocab
 if opt.vocabSize == 3000:
     l_dict = json.load(open('data/vocabulary_alternate.json'))
-else
+else:
     l_dict = json.load(open('data/vocabulary_1000.json'))
 
 # Create train dataloader
