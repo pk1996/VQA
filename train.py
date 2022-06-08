@@ -16,6 +16,7 @@ Other available options -
 5. experiment
 6. checkpoint_dir - path to .pt saved checkpoint.
 7  model - SAN/Tiled/Baseline
+8. vocabSize - 1000/3000
 
 Note - Output saved as following 
 
@@ -30,6 +31,7 @@ exp_dir_name
  To run from saved checkpoint
  python train.py --checkpoint_dir experiment/checkpoint.pt
  
+ To
 '''
 
 import torch
