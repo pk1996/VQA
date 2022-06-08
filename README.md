@@ -19,6 +19,19 @@ We only consider the top 3000 frequent answers with single answers
 python filter_data.py --split train
 python filter_data.py --split val
 ```
+To train network
+```
+python train.py --experiment <name_of_experiment> --model <SAN/Tiled/Baseline>
+
+--experiment - name of experiment
+--epocs - number of epochs
+--learning rate - learning rate
+--batchSize - batch size
+--checkpoint_dir - path to saved checkpoint
+--optim - adam/sgd
+--model - SAN/Tiled/Baseline
+```
+
 
 # TODO
 Does the vocabulary have only single word answers because we are filtering it out that way \
