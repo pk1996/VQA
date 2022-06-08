@@ -21,15 +21,29 @@ def main(path):
     print('Processing Vocab.....')
     questions = get_questions(questions)
     answers = get_answers(answers)
-    questions = extract_vocab_2(questions)
-    answers = extract_vocab_2(answers,end_idx=3000)
+    questions = extract_vocab(questions)
+    answers = extract_vocab_2(answers,end_idx=1000)
     vocabs={'questions':questions,'answers':answers}
     
     print('Dumping as json file.....')
-    with open('../data/vocabulary_alternate.json', 'w') as fd:
+    with open('../data/vocabulary_1000.json', 'w') as fd:
         json.dump(vocabs, fd)
 
 def extract_vocab_2(gen,start_idx=0,end_idx=None):
+    import itertools
+    from collections import Counter
+    all_tokens = gen
+    counter = Counter(all_tokens)
+    if end_idx:
+        most_common = counter.most_common(end_idx)
+        most_common = (t for t, c in most_common)
+    else:
+        most_common = counter.keys()
+    tokens = sorted(most_common, key=lambda x: (counter[x], x), reverse=True)
+    vocab = {t: i for i, t in enumerate(tokens, start=start_idx)}
+    return vocab
+
+def extract_vocab(gen,start_idx=0,end_idx=None):
     import itertools
     from collections import Counter
     all_tokens = itertools.chain.from_iterable(gen)
@@ -45,6 +59,7 @@ def extract_vocab_2(gen,start_idx=0,end_idx=None):
 
 def get_answers(json_file):
     import re
+    from collections import Counter
     _period_strip = re.compile(r'(?!<=\d)(\.)(?!\d)')
     _comma_strip = re.compile(r'(\d)(,)(\d)')
     _punctuation_chars = re.escape(r';/[]"{}()=+\_-><@`,?!')
@@ -60,9 +75,12 @@ def get_answers(json_file):
         s = _punctuation.sub(' ', s)
         s = _period_strip.sub('', s)
         return s.strip()
-    answers = [[a['answer'] for a in d['answers']] for d in json_file['annotations']]
+    answers=[]
+    for i in json_file['annotations']:
+        if len(i['multiple_choice_answer'].split())==1:
+            answers.append(i['multiple_choice_answer'])
     for answer_list in answers:
-        yield list(map(process_punctuation, answer_list))
+        yield process_punctuation(answer_list)
 
 def get_questions(json_file):
     questions = [a['question'] for a in json_file['questions']]
