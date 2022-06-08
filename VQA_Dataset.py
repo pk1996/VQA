@@ -25,7 +25,7 @@ import numpy as np
 import json
 
 class VQA_Data(Dataset):
-    def __init__(self, split):
+    def __init__(self, split, vocab_size = 3000):
         '''
         split - string ['train', 'val', 'test']
         '''
@@ -41,7 +41,10 @@ class VQA_Data(Dataset):
         self.ann = json.load(open(osp.join(self.root, 'annotations.json')))['annotations']       
         
         # Load dictionary for q&a
-        vocab = json.load(open('data/vocabulary_alternate.json'))
+        if vocab_size == 3000:
+            vocab = json.load(open('data/vocabulary_alternate.json'))
+        else:
+            vocab = json.load(open('data/vocabulary_1000.json'))
         self.q_vocab = vocab['questions']
         self.a_vocab = vocab['answers']
         

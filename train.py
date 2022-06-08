@@ -102,6 +102,7 @@ parser.add_argument('--checkpoint_dir', default=None, help='path to checkpoints'
 parser.add_argument('--optim', default='adam', help='select optimizer' )
 parser.add_argument('--dropout', type=float, default=None, help='dropout' )
 parser.add_argument('--model', type=str, default='Tiled', help='Select model type (SAN/Tiled/Baseline)')
+parser.add_argument('--vocabSize', type=int, default=1000, help='specify size of vocab 1000/3000' )
 
 # The detail network setting
 opt = parser.parse_args()
@@ -138,14 +139,19 @@ if not os.path.exists(exp_dir):
     with open(hparmas_file, 'w') as fp:
         json.dump(hparams, fp)
     
-    
+
+# load vocab
+if opt.vocabSize == 3000:
+    l_dict = json.load(open('data/vocabulary_alternate.json'))
+else
+    l_dict = json.load(open('data/vocabulary_1000.json'))
+
 # Create train dataloader
-dataset = VQA_Data('train')
+dataset = VQA_Data('train', opt.vocabSize)
 train_dataloader = DataLoader(dataset, batch_size = batch_size, shuffle=True)
-l_dict = json.load(open('data/vocabulary_alternate.json'))
 
 # Create val dataloader
-dataset = VQA_Data('val')
+dataset = VQA_Data('val', opt.vocabSize)
 val_dataloader = DataLoader(dataset, batch_size = batch_size, shuffle=True)
 
 # Select device
