@@ -7,8 +7,8 @@ chmod +x download_data.sh
 ```
 Genereate image features for train and validation data usnig pre-trained ResNet model -
 ```
-python generate_image_features --imgRoot '../data/val/val2014/' --outRoot '../data/val/img_features/'
-python generate_image_features --imgRoot '../data/train/train2014/' --outRoot '../data/train/img_features/'
+python generate_image_feature.py --imgRoot '../data/val/val2014/' --outRoot '../data/val/img_features/'
+python generate_image_feature.py --imgRoot '../data/train/train2014/' --outRoot '../data/train/img_features/'
 ```
 Generate vocabulary for using the following - 
 ```
