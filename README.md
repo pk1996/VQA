@@ -34,15 +34,3 @@ python train.py --experiment <name_of_experiment> --model <SAN/Tiled/Baseline>
 Note that the model and checkpoint_dir flag need to match in terms of the model architecture.
 
 
-# TODO
-Does the vocabulary have only single word answers because we are filtering it out that way \
-What percetage of answers would be covered if we take 1000 most frequent answers because SAN and baseline work on 1000? \
-To add eval related code 
-
-# Models to train
-Tiled (lr 0.01 | lr 0.005) \
-SAN(lr 0.001 | bs 100 | sgd mom 0.9) \
-Baseline(lr 0.001 | bs 100 | sgd mom 0.9) \
-Tiled(sgd with no exponential lr | adam with exponential lr)
-
-
